@@ -3,12 +3,11 @@
 #define RST_PIN 5                // D1
 #include <SPI.h>
 #include <MFRC522.h>
-#include <FirebaseArduino.h>
-#include <ArduinoJson.h>
-/*/#include <ESP8266HTTPClient.h>*/
+//#include <WiFi.h>
+//#include <MySQL_Connection.h>
+//#include <MySQL_Cursor.h>
+
 WiFiClient client;
-#define FIREBASE_HOST "https://bits-fb169-default-rtdb.firebaseio.com/"
-#define FIREBASE_AUTH "2GG2tZm2UvLluSv6zrv16JtflZXvDO8xHOdJInm3"
 
 String MakerIFTTT_Key ;
 String MakerIFTTT_Event;
@@ -17,6 +16,7 @@ char *append_ul(char *here, unsigned long u) { char buf[20]; return append_str(h
 char post_rqst[256];char *p;char *content_length_here;char *json_start;int compi;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); 
+
 
 void setup()
 {
@@ -40,7 +40,7 @@ void setup()
   Serial.println();
   Serial.println("Connected");
 
-   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  // Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
   
     pinMode(16, OUTPUT);         // D0
     pinMode(0, OUTPUT);          // D3
@@ -140,19 +140,21 @@ void an()
  
  else if (content.substring(1) == "2A 16 53 19") 
   {
-    phn="919553150861";
+    phn="919492910529";
   }
  else if (content.substring(1) == "43 7F 51 0B") 
   {
-    phn="919701638838";
+    phn="919492910529";
   }
   else if (content.substring(1) == "2B 44 C4 0C") 
   {
-    phn="919573689514";
+    phn="919492910529";
   }
   
-  if (client.connect("maker.ifttt.com",80)) {
-    MakerIFTTT_Key ="fXd_5xaYKKXuJQeoHomtUYDCqDw50PICe-KimxBaFr7";//kJIp_hhokuhLNTCeFk3ba4NWxEcIOWcR8kbrbuB8u-1
+ if (client.connect("maker.ifttt.com",80)) {
+    //Nikhil    mY-XQS8hkaO88vGdXcTue_pCy6KaA-QFwk-gLsqDdvq
+    //shahshi fXd_5xaYKKXuJQeoHomtUYDCqDw50PICe-KimxBaFr7           updated   oOdl0JQ2We7ByiVjixLvdUptJMWjFCW3zuF278HNm0c
+    MakerIFTTT_Key ="oOdl0JQ2We7ByiVjixLvdUptJMWjFCW3zuF278HNm0c";//kJIp_hhokuhLNTCeFk3ba4NWxEcIOWcR8kbrbuB8u-1
     MakerIFTTT_Event ="FINED";
     p = post_rqst;
     p = append_str(p, "POST /trigger/");
@@ -209,14 +211,8 @@ void ani()
      content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
   Serial.print("   NOT FINED");
-  content.toUpperCase();
-  Firebase.setString("Vehicle No :",content.substring(1) );//.substring(1)
-  /*if (Firebase.failed()) {
-     Serial.print("setting /message failed:");
-     Serial.println(Firebase.error());  
-     return;
- }
-*/
+ 
+
   Serial.println();
   
   
